@@ -52,6 +52,18 @@ When the private official signing key is available, the APK is generated at `dis
 
 The build script uses the pinned UVC and logging dependencies in `libs/` to reproduce the hardware-tested source version.
 
+## Installing v4.3 or Later
+
+A future v4.3 release may be built on another computer and may use a different signing key. This is allowed, but Android will not install a differently signed APK directly over v4.2. Samsung phones may show **App not installed**, **signature conflict**, or **the update is incompatible with the existing app**.
+
+If v4.3 uses a different signing key:
+
+1. Back up any important recordings and settings.
+2. Uninstall UVC90 Camera v4.2 from the phone.
+3. Install the newly downloaded v4.3 APK as a fresh installation.
+
+Uninstalling can remove app settings and private app data. Recordings in the shared `Movies/UVC90` folder normally remain, but should still be backed up first. If v4.3 happens to use the same signing key as v4.2, it can instead be installed directly as an update without uninstalling v4.2.
+
 ## Usage
 
 1. Install the APK on a Samsung phone and grant the Camera permission.
