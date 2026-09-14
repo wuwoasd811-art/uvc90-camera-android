@@ -4,6 +4,12 @@
 
 面向三星 Android 手机和指定 UVC 全局快门相机的实验性录像应用。当前版本为 **v4.2**，目标设备为 USB VID `1bcf` / PID `28c4`。
 
+## 下载安装
+
+**[直接下载 UVC90 Camera v4.2 APK](https://github.com/wuwoasd811-art/uvc90-camera-android/releases/download/v4.2/UVC90-Camera-v4.2.apk)**
+
+可以前往 [全部版本页面](https://github.com/wuwoasd811-art/uvc90-camera-android/releases) 查看安装包和版本说明。源代码、使用说明和构建方法均保存在当前仓库中。
+
 ## 主要能力
 
 - 固定请求 MJPEG `1920×1080 @ 90 FPS`，不中途切换分辨率或裁剪。
