@@ -1,38 +1,40 @@
 # UVC90 Camera for Android
 
-面向三星 Android 手机和指定 UVC 全局快门相机的实验性录像应用。当前版本为 **v4.2**，目标设备为 USB VID `1bcf` / PID `28c4`。
+**English** | [简体中文](README_CN.md)
 
-## 主要能力
+An experimental video-recording app for Samsung Android phones and a specific UVC global-shutter camera. The current version is **v4.2**, targeting USB VID `1bcf` and PID `28c4`.
 
-- 固定请求 MJPEG `1920×1080 @ 90 FPS`，不中途切换分辨率或裁剪。
-- H.264 MP4 录像，录像帧率可选 90/60/30 FPS，目标码率 60 Mbps。
-- 完整 1080p 预览，默认仅抽取 15 FPS 显示，降低手机负载但不改变采集源。
-- 显示相机实收帧率和录像写入帧率。
-- 可调曝光、Gamma、亮度、饱和度、对比度、色调、锐度、自动白平衡、逆光补偿和防频闪。
-- 修改硬件参数后立即读回，避免界面数值变化但相机未实际接受。
-- 动态检测标准 UVC Gain/ISO；只有相机确实开放该控制时才显示滑条。
-- 修复三星 Android USB 授权回调、启动0 FPS、参数调整后黑屏及预览红蓝通道异常。
-- 参数面板可收起，以完整显示预览画面。
+## Features
 
-## v4.2 默认画质策略
+- Requests a fixed MJPEG stream at `1920×1080 @ 90 FPS` without changing resolution or cropping during capture.
+- Records H.264 MP4 video at a selectable 90, 60, or 30 FPS with a target bitrate of 60 Mbps.
+- Displays the full 1080p frame while sampling the preview at 15 FPS by default to reduce phone load without changing the capture stream.
+- Shows the incoming camera frame rate and the recording write rate.
+- Provides controls for exposure, gamma, brightness, saturation, contrast, hue, sharpness, automatic white balance, backlight compensation, and anti-flicker frequency.
+- Reads hardware controls back immediately after a change so the UI does not claim that an unsupported value was accepted.
+- Detects standard UVC Gain/ISO dynamically and only shows the control when the camera actually exposes it.
+- Includes fixes for Samsung Android USB permission callbacks, 0 FPS at startup, black preview after parameter changes, and swapped red/blue preview channels.
+- Allows the parameter panel to be collapsed for an unobstructed preview.
 
-- 正常光线：曝光 9.5 ms、Gamma 130、亮度 0。
-- 自动白平衡开启、饱和度64、对比度0、色调0、锐度2、逆光补偿开启、50 Hz防频闪。
-- 弱光时先把曝光提高到最多10.5 ms，以保证曝光时间不超过90 FPS约11.1 ms的帧周期。
-- 曝光不足时临时把Gamma提高到最多170，再把亮度提高到最多+12。
-- 环境恢复后按亮度、Gamma、曝光的顺序回到默认值。
-- 不把软件亮度或Gamma标记为ISO；没有硬件Gain时明确显示“不支持”。
+## v4.2 Default Image Strategy
 
-## 构建
+- Normal lighting: 9.5 ms exposure, gamma 130, and brightness 0.
+- Automatic white balance enabled, saturation 64, contrast 0, hue 0, sharpness 2, backlight compensation enabled, and 50 Hz anti-flicker.
+- In low light, exposure is raised first, up to 10.5 ms, remaining below the approximately 11.1 ms frame period required for 90 FPS.
+- If the image remains underexposed, gamma is temporarily raised up to 170, followed by brightness up to +12.
+- When lighting recovers, brightness, gamma, and exposure return to their defaults in reverse order.
+- Software brightness and gamma are not labeled as ISO. If hardware Gain is unavailable, the app reports it as unsupported.
 
-要求：
+## Build
 
-- macOS或Linux
-- JDK 17+
+Requirements:
+
+- macOS or Linux
+- JDK 17 or newer
 - Android SDK Platform 35
 - Android Build Tools 35.0.0
 
-设置环境变量后执行：
+Set the environment variables and run:
 
 ```bash
 export ANDROID_SDK_ROOT=/path/to/android-sdk
@@ -40,16 +42,16 @@ export JAVA_HOME=/path/to/jdk
 ./build.sh
 ```
 
-签名后的调试APK生成到 `dist/UVC90-Camera-v4.2.apk`。构建脚本使用仓库 `libs/` 中固定版本的UVC和日志依赖，以复现当前硬件验证版本。
+The signed debug APK is generated at `dist/UVC90-Camera-v4.2.apk`. The build script uses the pinned UVC and logging dependencies in `libs/` to reproduce the hardware-tested build.
 
-## 运行说明
+## Usage
 
-1. 在三星手机上安装APK并授予“相机”权限。
-2. 通过支持数据传输的OTG转接器连接目标UVC相机。
-3. 点击“请求权限并连接1080p90”，在系统USB弹窗中选择允许。
-4. 确认界面显示 `MJPEG 1920×1080 @ 90 FPS` 后开始录像。
-5. 视频保存至系统 `Movies/UVC90` 目录。
+1. Install the APK on a Samsung phone and grant the Camera permission.
+2. Connect the target UVC camera through a data-capable OTG adapter.
+3. Tap **Request permission and connect 1080p90**, then select **Allow** in the Android USB dialog.
+4. Confirm that the app displays `MJPEG 1920×1080 @ 90 FPS`, then start recording.
+5. Recordings are saved in the system `Movies/UVC90` directory.
 
-这是面向特定硬件组合的验证应用。不同固件可能提供不同的UVC控制范围，界面显示的相机实读结果应作为最终依据。
+This is a validation app for a specific hardware combination. UVC control ranges may vary across camera firmware versions; treat the hardware readback displayed by the app as authoritative.
 
-第三方依赖及本项目对 `USBMonitor` 的修改说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for third-party dependencies and details of this project's `USBMonitor` modifications.
