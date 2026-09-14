@@ -1,0 +1,23 @@
+# Build outputs and local signing material
+/build/
+/dist/
+*.apk
+*.aab
+*.keystore
+*.jks
+
+# IDE and operating-system files
+.gradle/
+.idea/
+*.iml
+.DS_Store
+local.properties
+
+# Logs, captures and local test media
+*.log
+*.mp4
+*.mov
+*.mkv
+*.jpg
+*.jpeg
+*.png
