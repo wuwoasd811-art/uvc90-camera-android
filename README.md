@@ -48,7 +48,9 @@ export JAVA_HOME=/path/to/jdk
 ./build.sh
 ```
 
-The signed debug APK is generated at `dist/UVC90-Camera-v4.2.apk`. The build script uses the pinned UVC and logging dependencies in `libs/` to reproduce the hardware-tested build.
+When the private official signing key is available, the APK is generated at `dist/UVC90-Camera-v4.2.apk`. A clean public checkout without that key produces `dist/UVC90-Camera-v4.2-dev.apk` with a development signature instead. A development build cannot update the official APK. See [signing/README.md](signing/README.md) for signing details.
+
+The build script uses the pinned UVC and logging dependencies in `libs/` to reproduce the hardware-tested source version.
 
 ## Usage
 
@@ -61,3 +63,7 @@ The signed debug APK is generated at `dist/UVC90-Camera-v4.2.apk`. The build scr
 This is a validation app for a specific hardware combination. UVC control ranges may vary across camera firmware versions; treat the hardware readback displayed by the app as authoritative.
 
 See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for third-party dependencies and details of this project's `USBMonitor` modifications.
+
+## License
+
+The project source is licensed under the [Apache License 2.0](LICENSE). Included third-party components remain subject to their respective licenses described in [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

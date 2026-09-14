@@ -81,20 +81,47 @@ cp "$deps_dir/uvc/jni/arm64-v8a/"*.so "$stage_dir/lib/arm64-v8a/"
 "$sdk_dir/build-tools/35.0.0/zipalign" -f 4 \
     "$build_dir/base.apk" "$build_dir/UVC90-unsigned.apk"
 
-if [ ! -f "$build_dir/debug.keystore" ]; then
-    "$jdk_dir/bin/keytool" -genkeypair -v \
-        -keystore "$build_dir/debug.keystore" \
-        -storepass android -alias androiddebugkey -keypass android \
-        -dname "CN=UVC90 Debug,O=Codex,C=CN" \
-        -keyalg RSA -keysize 2048 -validity 10000
+keystore_file=${UVC90_KEYSTORE:-"$project_dir/signing/uvc90-release.keystore"}
+keystore_store_pass=${UVC90_STORE_PASSWORD:-android}
+keystore_key_pass=${UVC90_KEY_PASSWORD:-"$keystore_store_pass"}
+keystore_alias=${UVC90_KEY_ALIAS:-androiddebugkey}
+apk_output="$outputs_dir/UVC90-Camera-v4.2.apk"
+
+if [ ! -f "$keystore_file" ]; then
+    if [ -n "${UVC90_KEYSTORE:-}" ]; then
+        echo "The signing key specified by UVC90_KEYSTORE does not exist." >&2
+        exit 1
+    fi
+
+    keystore_file="$build_dir/development.keystore"
+    keystore_store_pass=android
+    keystore_key_pass=android
+    keystore_alias=androiddebugkey
+    apk_output="$outputs_dir/UVC90-Camera-v4.2-dev.apk"
+
+    if [ ! -f "$keystore_file" ]; then
+        "$jdk_dir/bin/keytool" -genkeypair -v \
+            -keystore "$keystore_file" \
+            -storepass "$keystore_store_pass" \
+            -alias "$keystore_alias" \
+            -keypass "$keystore_key_pass" \
+            -dname "CN=UVC90 Development,O=UVC90 Camera,C=CN" \
+            -keyalg RSA -keysize 2048 -validity 10000
+    fi
+
+    echo "WARNING: official signing key not found; creating a development APK." >&2
+    echo "The development APK cannot update the official GitHub release." >&2
 fi
 
 "$sdk_dir/build-tools/35.0.0/apksigner" sign \
-    --ks "$build_dir/debug.keystore" \
-    --ks-pass pass:android \
-    --key-pass pass:android \
-    --out "$outputs_dir/UVC90-Camera-v4.2.apk" \
+    --ks "$keystore_file" \
+    --ks-key-alias "$keystore_alias" \
+    --ks-pass "pass:$keystore_store_pass" \
+    --key-pass "pass:$keystore_key_pass" \
+    --out "$apk_output" \
     "$build_dir/UVC90-unsigned.apk"
 
 "$sdk_dir/build-tools/35.0.0/apksigner" verify --verbose \
-    "$outputs_dir/UVC90-Camera-v4.2.apk"
+    "$apk_output"
+
+echo "APK generated at $apk_output"
