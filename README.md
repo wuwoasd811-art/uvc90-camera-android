@@ -52,6 +52,14 @@ When the private official signing key is available, the APK is generated at `dis
 
 The build script uses the pinned UVC and logging dependencies in `libs/` to reproduce the hardware-tested source version.
 
+## Upgrading to v4.3 or Later
+
+Android only accepts a new APK as an update when its package name and signing certificate both match the installed version. Any official v4.3 or later release must therefore keep the package name `com.codex.uvc90` and use the same private signing key as v4.2.
+
+When building on another Mac or computer, restore the securely backed-up key to `signing/uvc90-release.keystore`, or point `UVC90_KEYSTORE` to its secure location. Before publishing, verify that the certificate SHA-256 fingerprint matches the value in [signing/README.md](signing/README.md).
+
+If the v4.2 key is lost and a new key is used, Android will reject the new APK as an incompatible update. Users would have to uninstall v4.2 before installing the new version, which can remove app settings and private app data. Back up recordings before uninstalling; recordings in the shared `Movies/UVC90` folder normally remain, but should not be treated as the only copy.
+
 ## Usage
 
 1. Install the APK on a Samsung phone and grant the Camera permission.

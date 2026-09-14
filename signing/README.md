@@ -13,3 +13,12 @@ By default, `build.sh` looks for the official key at `signing/uvc90-release.keys
 If no official key is available, the script creates a separate development key under `build/` and outputs an APK ending in `-dev.apk`. That APK is suitable for testing but cannot update the official release.
 
 Keep at least one encrypted offline backup of the official key. Losing it permanently prevents future APKs from updating existing installations.
+
+## Moving to another computer
+
+1. Restore the encrypted backup of the official keystore to `signing/uvc90-release.keystore`, or set `UVC90_KEYSTORE` to its secure location.
+2. Supply the original alias and passwords through the documented environment variables when they differ from the defaults.
+3. Build the APK and verify its certificate fingerprint before publishing it.
+4. Confirm that the output is `UVC90-Camera-v4.3.apk` or the intended official name, never a file ending in `-dev.apk`.
+
+If the official key is unavailable, do not publish a development-signed APK as v4.3. Android will not allow it to update v4.2, and users would have to uninstall the existing app first.
