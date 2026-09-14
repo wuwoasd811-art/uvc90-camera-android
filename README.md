@@ -52,13 +52,17 @@ When the private official signing key is available, the APK is generated at `dis
 
 The build script uses the pinned UVC and logging dependencies in `libs/` to reproduce the hardware-tested source version.
 
-## Upgrading to v4.3 or Later
+## Installing v4.3 or Later
 
-Android only accepts a new APK as an update when its package name and signing certificate both match the installed version. Any official v4.3 or later release must therefore keep the package name `com.codex.uvc90` and use the same private signing key as v4.2.
+A future v4.3 release may be built on another computer and may use a different signing key. This is allowed, but Android will not install a differently signed APK directly over v4.2. Samsung phones may show **App not installed**, **signature conflict**, or **the update is incompatible with the existing app**.
 
-When building on another Mac or computer, restore the securely backed-up key to `signing/uvc90-release.keystore`, or point `UVC90_KEYSTORE` to its secure location. Before publishing, verify that the certificate SHA-256 fingerprint matches the value in [signing/README.md](signing/README.md).
+If v4.3 uses a different signing key:
 
-If the v4.2 key is lost and a new key is used, Android will reject the new APK as an incompatible update. Users would have to uninstall v4.2 before installing the new version, which can remove app settings and private app data. Back up recordings before uninstalling; recordings in the shared `Movies/UVC90` folder normally remain, but should not be treated as the only copy.
+1. Back up any important recordings and settings.
+2. Uninstall UVC90 Camera v4.2 from the phone.
+3. Install the newly downloaded v4.3 APK as a fresh installation.
+
+Uninstalling can remove app settings and private app data. Recordings in the shared `Movies/UVC90` folder normally remain, but should still be backed up first. If v4.3 happens to use the same signing key as v4.2, it can instead be installed directly as an update without uninstalling v4.2.
 
 ## Usage
 
