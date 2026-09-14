@@ -4,6 +4,12 @@
 
 An experimental video-recording app for Samsung Android phones and a specific UVC global-shutter camera. The current version is **v4.2**, targeting USB VID `1bcf` and PID `28c4`.
 
+## Download
+
+**[Download UVC90 Camera v4.2 APK](https://github.com/wuwoasd811-art/uvc90-camera-android/releases/download/v4.2/UVC90-Camera-v4.2.apk)**
+
+See [all releases](https://github.com/wuwoasd811-art/uvc90-camera-android/releases) for packaged builds and release notes. The source code and build instructions are kept together in this repository.
+
 ## Features
 
 - Requests a fixed MJPEG stream at `1920×1080 @ 90 FPS` without changing resolution or cropping during capture.
