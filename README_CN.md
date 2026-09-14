@@ -48,7 +48,9 @@ export JAVA_HOME=/path/to/jdk
 ./build.sh
 ```
 
-签名后的调试 APK 生成到 `dist/UVC90-Camera-v4.2.apk`。构建脚本使用仓库 `libs/` 中固定版本的 UVC 和日志依赖，以复现当前硬件验证版本。
+存在私有的官方签名密钥时，APK 会生成到 `dist/UVC90-Camera-v4.2.apk`。从公开仓库全新下载、但没有官方密钥时，会生成使用开发签名的 `dist/UVC90-Camera-v4.2-dev.apk`；开发版不能覆盖安装 GitHub 上的官方版本。签名说明见 [signing/README.md](signing/README.md)。
+
+构建脚本使用仓库 `libs/` 中固定版本的 UVC 和日志依赖，以复现当前经过硬件验证的源码版本。
 
 ## 运行说明
 
@@ -61,3 +63,7 @@ export JAVA_HOME=/path/to/jdk
 这是面向特定硬件组合的验证应用。不同固件可能提供不同的 UVC 控制范围，界面显示的相机实读结果应作为最终依据。
 
 第三方依赖及本项目对 `USBMonitor` 的修改说明见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+
+## 许可证
+
+项目源码采用 [Apache License 2.0](LICENSE)。仓库内的第三方组件继续遵循 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) 中列出的各自许可证。
